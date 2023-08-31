@@ -11,7 +11,7 @@ import (
 func (app *Config) routes() http.Handler {
 	mux := chi.NewRouter()
 
-	// specifiy who is allowed to connect
+	// specify who is allowed to connect
 	mux.Use(cors.Handler(cors.Options{
 		AllowedOrigins: []string{
 			"https://*",
@@ -32,6 +32,8 @@ func (app *Config) routes() http.Handler {
 	}))
 
 	mux.Use(middleware.Heartbeat("/ping"))
+
+	mux.Post("/authenticate", app.Authenticate)
 
 	return mux
 }
